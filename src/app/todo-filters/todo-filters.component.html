@@ -1,0 +1,5 @@
+<ul class="filters">
+  <li><a [class.selected]="filterCondition === 'all'" href="#/" (click)="changeFilter('all')">All</a></li>
+  <li><a [class.selected]="filterCondition === 'active'" href="#/active" (click)="changeFilter('active')">Active</a></li>
+  <li><a [class.selected]="filterCondition === 'completed'" href="#/completed" (click)="changeFilter('completed')">Completed</a></li>
+</ul>
