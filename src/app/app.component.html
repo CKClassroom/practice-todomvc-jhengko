@@ -1,0 +1,55 @@
+<section class="todoapp">
+  <app-header
+    [title]="title"
+    [newTodoPlaceholder]="newTodoPlaceholder"
+    (addTodo)="addTodo($event)"
+  ></app-header>
+  <!-- This section should be hidden by default and shown when there are todos -->
+  <section class="main" *ngIf="todos.length > 0">
+    <input
+      class="toggle-all"
+      type="checkbox"
+      (change)="toggleAllComplete($event)"
+      [(ngModel)]="toggleStatus"
+    />
+    <label for="toggle-all">Mark all as complete</label>
+    <ul class="todo-list">
+      <li
+        *ngFor="let todo of (todos | filter: filterCondition); let idx = index"
+        [class.completed]="todo.isCompleted"
+        [class.editing]="todo.isEditing"
+      >
+        <div class="view">
+          <input
+            class="toggle"
+            type="checkbox"
+            [checked]="todo.isCompleted"
+            (change)="toggleComplete(todo)"
+          />
+          <label (dblclick)="todo.isEditing = true">{{ todo.item }}</label>
+          <button class="destroy" (click)="removeTodo(idx)"></button>
+        </div>
+        <input
+          class="edit"
+          [(ngModel)]="todo.item"
+          (blur)="todo.isEditing = false"
+        />
+      </li>
+    </ul>
+  </section>
+  <!-- This footer should hidden by default and shown when there are todos -->
+  <footer class="footer" [hidden]="todos.length === 0">
+    <!-- This should be `0 items left` by default -->
+    <span class="todo-count"
+      ><strong>{{ uncompletedCount }}</strong> item left</span
+    >
+    <!--APP 代入FILTERS-->
+    <app-todo-filters [(filterCondition)]="filterCondition"></app-todo-filters>
+
+
+    <button class="clear-completed" (click)="clearCompleted()">
+      Clear completed
+    </button>
+  </footer>
+</section>
+<app-footer></app-footer>
